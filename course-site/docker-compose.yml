@@ -1,0 +1,23 @@
+# Delhi Hindi study site — minimal static host for Unraid (or any Docker host).
+#
+# Setup:
+#   1. Put this file and index.html in the same folder, e.g. /mnt/user/appdata/hindi/
+#   2. docker compose up -d      (or add as a container in the Unraid UI, see README)
+#   3. Open http://<tower-ip>:842 on any device on your LAN.
+#
+# Change the host port (842) if something already uses it.
+
+services:
+  hindi:
+    image: nginx:alpine
+    container_name: delhi-hindi
+    restart: unless-stopped
+    ports:
+      - "842:80"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+    labels:
+      # Optional: if you run Traefik on Unraid, uncomment and set your domain.
+      # - "traefik.enable=true"
+      # - "traefik.http.routers.hindi.rule=Host(`hindi.yourdomain.com`)"
+      - "org.opencontainers.image.title=Delhi Hindi study site"

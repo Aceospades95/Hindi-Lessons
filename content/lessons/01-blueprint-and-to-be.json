@@ -1,0 +1,50 @@
+{
+  "code": "T01",
+  "seq": 1,
+  "date": null,
+  "title": "Lesson 1 · The sentence blueprint + to be",
+  "topic": "Word order, no articles, and am/is/are",
+  "pattern": {
+    "name": "The sentence blueprint",
+    "template": "[ Subject ]  +  [ middle: everything else ]  +  [ verb ]",
+    "notes": [
+      "Subject always starts, verb always ends. Only the middle changes.",
+      "No a / an / the — Hindi doesn't use articles. Just drop them.",
+      "not = nahi, and it sits just before the verb section.",
+      "very = bahut (you also heard \"bahot\" — same word), placed before the word it boosts.",
+      "and = aur — works just like English: samosa aur pani puri."
+    ]
+  },
+  "grids": [
+    {
+      "title": "To be: am / is / are",
+      "headers": ["English", "Hindi", "Notes"],
+      "rows": [
+        ["I am", "Mai … hoo(n)", "nasal ending"],
+        ["You are (intimate)", "Tu … hai", "closest friends and little kids only"],
+        ["You are (everyday)", "Tum … ho", "friends, peers"],
+        ["You are (formal)", "Aap … ho", "aap … hai(n) = extremely formal"],
+        ["He / she / it is", "Ye / Vo … hai", "ye = near, vo = far"],
+        ["We are", "Hum … hai(n)", ""],
+        ["They are", "Ye log / Vo log … hai(n)", "log = people"]
+      ]
+    }
+  ],
+  "vocab": [
+    { "id": "T01-001", "en": "I", "rom": "mai", "dev": "मैं", "phon": "", "note": "as in: Mai Jacob hoo(n)", "gender": "", "tags": ["pronoun"] },
+    { "id": "T01-002", "en": "and", "rom": "aur", "dev": "और", "phon": "", "note": "", "gender": "", "tags": [] },
+    { "id": "T01-003", "en": "not", "rom": "nahi", "dev": "नहीं", "phon": "", "note": "sits just before the verb section", "gender": "", "tags": [] },
+    { "id": "T01-004", "en": "very", "rom": "bahut", "dev": "बहुत", "phon": "", "note": "also heard as bahot — same word; goes before the word it boosts", "gender": "", "tags": [] }
+  ],
+  "sentences": [
+    { "id": "sT01-01", "en": "I am Jacob.", "rom": "Mai Jacob hoo(n).", "dev": "", "phon": "", "confirmed": true, "note": "nasal ending on hoo(n)" },
+    { "id": "sT01-02", "en": "I am American.", "rom": "Mai American hoo(n).", "dev": "", "phon": "", "confirmed": true, "note": "" },
+    { "id": "sT01-03", "en": "I am the President.", "rom": "Mai President hoo(n).", "dev": "", "phon": "", "confirmed": true, "note": "no 'the' — articles don't exist" }
+  ],
+  "watch_out": [
+    "(n) means a nasal sound, not a spoken N: hoo(n), hai(n). The vowel goes up your nose.",
+    "hai vs hain: hai comes from the throat, hain is the nasal one — that tiny difference is singular vs plural.",
+    "J and Z blur together in Hindi, and V and W are the same sound — that's why vo / wo is written both ways."
+  ],
+  "ask_next_time": []
+}

@@ -1,0 +1,39 @@
+# Delhi Hindi — self-hosted study app.
+#
+#   docker compose up -d      → http://<your-server>:8377
+#
+# Use the prebuilt image (below) once you've pushed to GHCR, or comment `image:`
+# and uncomment `build: .` to build locally from this folder.
+
+services:
+  hindi:
+    # image: ghcr.io/aceospades95/hindi-lessons:latest
+    build: .
+    container_name: hindi-lessons
+    restart: unless-stopped
+    ports:
+      - "8377:8080"
+    volumes:
+      # The SQLite database and everyone's progress live here. Back this up.
+      - ./data-vol:/data
+    environment:
+      TZ: America/Chicago
+
+      # --- who may create an account -------------------------------------
+      # The first account created always becomes the admin.
+      # OPEN_SIGNUP=false + INVITE_REQUIRED=true → admin generates invite codes.
+      OPEN_SIGNUP: "true"
+      INVITE_REQUIRED: "false"
+
+      # --- optional: your self-hosted LLM as a second-opinion grader ------
+      # Leave unset and the app grades with rules only (fast, offline, good).
+      # Must be an OpenAI-compatible endpoint; note the trailing /v1.
+      # AI_BASE_URL: "http://192.168.1.50:11434/v1"
+      # AI_MODEL: "qwen2.5:7b-instruct"
+      # AI_API_KEY: ""
+      # AI_TIMEOUT_MS: "9000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

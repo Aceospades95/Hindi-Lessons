@@ -1,0 +1,61 @@
+{
+  "code": "T02",
+  "seq": 2,
+  "date": null,
+  "title": "Lesson 2 · Everyday words + numbers",
+  "topic": "First vocabulary bank and counting",
+  "pattern": {
+    "name": "Building big numbers",
+    "template": "left to right:  ek hazaar paanch sau  =  1,500",
+    "notes": [
+      "Plural is also respect: talking about your mom, an uncle, a teacher — use the plural form even for one person.",
+      "log after a pronoun makes it about people: ye log = these people. sab = all: ye sab = all of these."
+    ]
+  },
+  "grids": [
+    {
+      "title": "Big numbers",
+      "headers": ["Number", "Hindi", "Notes"],
+      "rows": [
+        ["100", "sau", ""],
+        ["1,000", "hazaar", ""],
+        ["100,000", "ek lakh", "from class: \"We want mango and 1 lakh\""],
+        ["1,500", "ek hazaar paanch sau", "build big numbers left to right"]
+      ]
+    }
+  ],
+  "vocab": [
+    { "id": "T02-001", "en": "water", "rom": "paani", "dev": "पानी", "phon": "", "note": "", "gender": "m", "tags": ["noun"] },
+    { "id": "T02-002", "en": "food", "rom": "khana", "dev": "खाना", "phon": "", "note": "", "gender": "m", "tags": ["noun"] },
+    { "id": "T02-003", "en": "dog", "rom": "kutta", "dev": "कुत्ता", "phon": "", "note": "", "gender": "m", "tags": ["noun"] },
+    { "id": "T02-004", "en": "cat", "rom": "billi", "dev": "बिल्ली", "phon": "", "note": "your page: billy — standardized to billi", "gender": "f", "tags": ["noun"] },
+    { "id": "T02-005", "en": "people", "rom": "log", "dev": "लोग", "phon": "", "note": "also makes pronouns plural: ye log = these people", "gender": "", "tags": ["noun"] },
+    { "id": "T02-006", "en": "all", "rom": "sab", "dev": "सब", "phon": "", "note": "ye sab = all of these · your page: sub", "gender": "", "tags": [] },
+    { "id": "T02-007", "en": "this / he / she / it (near)", "rom": "ye", "dev": "ये", "phon": "", "note": "distance is what matters, not gender", "gender": "", "tags": ["pronoun"] },
+    { "id": "T02-008", "en": "that / he / she / it (far)", "rom": "vo", "dev": "वो", "phon": "", "note": "also written wo — V and W are one sound", "gender": "", "tags": ["pronoun"] },
+    { "id": "T02-009", "en": "we", "rom": "hum", "dev": "हम", "phon": "", "note": "your page: haam — standardized to hum", "gender": "", "tags": ["pronoun"] },
+    { "id": "T02-010", "en": "1 / one", "rom": "ek", "dev": "एक", "phon": "", "note": "", "gender": "", "tags": ["number"] },
+    { "id": "T02-011", "en": "2 / two", "rom": "do", "dev": "दो", "phon": "", "note": "", "gender": "", "tags": ["number"] },
+    { "id": "T02-012", "en": "3 / three", "rom": "teen", "dev": "तीन", "phon": "", "note": "", "gender": "", "tags": ["number"] },
+    { "id": "T02-013", "en": "4 / four", "rom": "chaar", "dev": "चार", "phon": "", "note": "", "gender": "", "tags": ["number"] },
+    { "id": "T02-014", "en": "5 / five", "rom": "paanch", "dev": "पाँच", "phon": "", "note": "your page: panch — standardized to paanch", "gender": "", "tags": ["number"] },
+    { "id": "T02-015", "en": "6 / six", "rom": "chhe", "dev": "छह", "phon": "", "note": "", "gender": "", "tags": ["number"] },
+    { "id": "T02-016", "en": "7 / seven", "rom": "saat", "dev": "सात", "phon": "", "note": "", "gender": "", "tags": ["number"] },
+    { "id": "T02-017", "en": "8 / eight", "rom": "aath", "dev": "आठ", "phon": "", "note": "", "gender": "", "tags": ["number"] },
+    { "id": "T02-018", "en": "9 / nine", "rom": "nau", "dev": "नौ", "phon": "", "note": "your page: nav — standardized to nau", "gender": "", "tags": ["number"] },
+    { "id": "T02-019", "en": "10 / ten", "rom": "das", "dev": "दस", "phon": "", "note": "", "gender": "", "tags": ["number"] },
+    { "id": "T02-020", "en": "100 / hundred", "rom": "sau", "dev": "सौ", "phon": "", "note": "your page: saw — standardized to sau", "gender": "", "tags": ["number"] },
+    { "id": "T02-021", "en": "1,000 / thousand", "rom": "hazaar", "dev": "हज़ार", "phon": "", "note": "your page: hadar — standardized to hazaar", "gender": "", "tags": ["number"] },
+    { "id": "T02-022", "en": "100,000 / lakh / hundred thousand", "rom": "lakh", "dev": "लाख", "phon": "", "note": "ek lakh = 100,000", "gender": "", "tags": ["number"] }
+  ],
+  "sentences": [
+    { "id": "sT02-01", "en": "We are very happy.", "rom": "Hum bahut khush hai(n).", "dev": "", "phon": "", "confirmed": false, "note": "your notes have this in English only — khush is the likely word; confirm with your teacher" },
+    { "id": "sT02-02", "en": "We are very sad.", "rom": "Hum bahut dukhi hai(n).", "dev": "", "phon": "", "confirmed": false, "note": "English only in your notes — dukhi is the likely word; confirm with your teacher" }
+  ],
+  "watch_out": [
+    "Plural shows respect: one respected person still takes the plural form."
+  ],
+  "ask_next_time": [
+    "Happy and sad — likely khush and dukhi, but get your teacher's words. You currently have zero adjectives written down."
+  ]
+}

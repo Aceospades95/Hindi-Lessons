@@ -1,0 +1,78 @@
+{
+  "code": "T04",
+  "seq": 4,
+  "date": "2026-08-16",
+  "title": "Aug 16 · Whose is it: mera / meri / mere",
+  "topic": "Possessives — built on the is / us / in / un system you already know",
+  "pattern": {
+    "name": "Owning things",
+    "template": "possessor base  +  -a / -i / -e   —   the OWNED thing decides the ending",
+    "notes": [
+      "The owned thing decides the ending, not the owner: mer + a / i / e.",
+      "Same base, two systems: -ko = wanting (to them) · -ka / -ki / -ke = owning (their).",
+      "Decoding \"her laptop\": \"her\" picks the base by distance and respect (is / us / in / un); \"laptop\" picks the ending (electronic = masculine = -ka). Near = iska laptop, far = uska laptop. Two decisions, one word."
+    ]
+  },
+  "grids": [
+    {
+      "title": "Which ending?",
+      "headers": ["Ending", "Use when the owned thing is", "Example"],
+      "rows": [
+        ["-a  (mera)", "masculine singular", "mera kutta"],
+        ["-i  (meri)", "anything feminine", "meri billi, meri gaadi"],
+        ["-e  (mere)", "masculine plural, or masculine + respect", "mere …"]
+      ]
+    },
+    {
+      "title": "The full possessor grid",
+      "headers": ["Possessor", "-a", "-i", "-e"],
+      "rows": [
+        ["my", "mera", "meri", "mere"],
+        ["your (intimate)", "tera", "teri", "tere"],
+        ["your (everyday)", "tumhara", "tumhari", "tumhare"],
+        ["your (formal)", "aapka", "aapki", "aapke"],
+        ["our", "hamara", "hamari", "hamare"],
+        ["his / her / its (near)", "iska", "iski", "iske"],
+        ["his / her / its (far)", "uska", "uski", "uske"],
+        ["their (near), or respect", "inka", "inki", "inke"],
+        ["their (far), or respect", "unka", "unki", "unke"]
+      ]
+    }
+  ],
+  "vocab": [
+    { "id": "T04-001", "en": "my (masculine thing)", "rom": "mera", "dev": "मेरा", "phon": "", "note": "mera kutta", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-002", "en": "my (feminine thing)", "rom": "meri", "dev": "मेरी", "phon": "", "note": "meri billi, meri gaadi", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-003", "en": "my (masculine plural, or respect)", "rom": "mere", "dev": "मेरे", "phon": "", "note": "no plural nouns to use it on yet — see Ask next time", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-004", "en": "your (intimate, masculine thing)", "rom": "tera", "dev": "तेरा", "phon": "", "note": "teri, tere follow the same endings", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-005", "en": "your (everyday, masculine thing)", "rom": "tumhara", "dev": "तुम्हारा", "phon": "", "note": "tumhari, tumhare", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-006", "en": "your (formal, masculine thing)", "rom": "aapka", "dev": "आपका", "phon": "", "note": "aapki, aapke", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-007", "en": "our (masculine thing)", "rom": "hamara", "dev": "हमारा", "phon": "", "note": "hamari, hamare", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-008", "en": "his / her / its (near)", "rom": "iska", "dev": "इसका", "phon": "", "note": "iski, iske", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-009", "en": "his / her / its (far)", "rom": "uska", "dev": "उसका", "phon": "", "note": "uski, uske", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-010", "en": "their (near), or one respected person", "rom": "inka", "dev": "इनका", "phon": "", "note": "the mystery Inke on your old worksheet was this lesson", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-011", "en": "their (far), or one respected person", "rom": "unka", "dev": "उनका", "phon": "", "note": "", "gender": "", "tags": ["possessive"] },
+    { "id": "T04-012", "en": "car", "rom": "gaadi", "dev": "गाड़ी", "phon": "", "note": "feminine: meri gaadi", "gender": "f", "tags": ["noun"] }
+  ],
+  "sentences": [
+    { "id": "sT04-01", "en": "my dog", "rom": "mera kutta", "dev": "", "phon": "", "confirmed": true, "note": "kutta is masculine" },
+    { "id": "sT04-02", "en": "my cat", "rom": "meri billi", "dev": "", "phon": "", "confirmed": true, "note": "billi is feminine" },
+    { "id": "sT04-03", "en": "my car", "rom": "meri gaadi", "dev": "", "phon": "", "confirmed": true, "note": "gaadi is feminine" },
+    { "id": "sT04-04", "en": "your (formal) car", "rom": "aapki gaadi", "dev": "", "phon": "", "confirmed": true, "note": "" },
+    { "id": "sT04-05", "en": "our car", "rom": "hamari gaadi", "dev": "", "phon": "", "confirmed": true, "note": "" },
+    { "id": "sT04-06", "en": "his laptop (he's across the room)", "rom": "uska laptop", "dev": "", "phon": "", "confirmed": true, "note": "far = us base; electronics are masculine" },
+    { "id": "sT04-07", "en": "their car (near)", "rom": "inki gaadi", "dev": "", "phon": "", "confirmed": true, "note": "" },
+    { "id": "sT04-08", "en": "Michelle wants my iPhone.", "rom": "Michelle ko mera iPhone chahiye.", "dev": "", "phon": "", "confirmed": false, "note": "your 8/16 page has this in English only — this construction follows the day's rules; confirm with your teacher" }
+  ],
+  "watch_out": [
+    "Everything has a gender.",
+    "Huge things = masculine: oceans, lakes.",
+    "Anything that gives birth = feminine: galaxy, earth, rivers.",
+    "Electronic items = masculine. TV can go feminine because of the \"ee\" sound in T-V.",
+    "Most drinks are feminine, EXCEPT water, milk, juice = masculine.",
+    "Languages = feminine."
+  ],
+  "ask_next_time": [
+    "How do nouns pluralize? One kutta, two …? You now have mere but no plural nouns to use it on.",
+    "Confirm: Michelle ko mera iPhone chahiye."
+  ]
+}

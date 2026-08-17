@@ -1,0 +1,78 @@
+{
+  "code": "T03",
+  "seq": 3,
+  "date": "2026-08-04",
+  "title": "Aug 4 · Wanting: __ ko __ chahiye",
+  "topic": "Hindi doesn't say \"I want water\" — it says \"To me, water is wanted\"",
+  "pattern": {
+    "name": "Wanting things",
+    "template": "[ person + ko ]  +  [ thing ]  +  ( nahi )  +  chahiye",
+    "notes": [
+      "Names and nouns just add ko: Jacob ko, Michael ko.",
+      "Pronouns fuse with ko into a new word (see the table).",
+      "ye and vo can never combine with ko directly — they transform into is / us first."
+    ]
+  },
+  "grids": [
+    {
+      "title": "The ko forms",
+      "headers": ["Person", "ko form", "Notes"],
+      "rows": [
+        ["I", "Mujhko / Mujhe", "both work, same meaning"],
+        ["You (intimate)", "Tujhko", ""],
+        ["You (everyday)", "Tumko", ""],
+        ["You (formal)", "Aapko", ""],
+        ["We", "Humko", ""],
+        ["He / she / it / this (near)", "Isko", "say \"iss-ko\""],
+        ["He / she / it / that (far)", "Usko", "say \"oos-ko\""],
+        ["They (near), or one respected person", "Inko", ""],
+        ["They (far), or one respected person", "Unko", "say \"oon-ko\""]
+      ]
+    },
+    {
+      "title": "The 2×2 from your worksheet",
+      "headers": ["", "Informal (one person)", "Formal / plural"],
+      "rows": [
+        ["Near", "isko", "inko"],
+        ["Far", "usko", "unko"]
+      ]
+    }
+  ],
+  "vocab": [
+    { "id": "T03-001", "en": "want / need", "rom": "chahiye", "dev": "चाहिए", "phon": "chaah-hee-yay", "note": "always with a ko person: X ko Y chahiye · your pages: chahiay / chahiya", "gender": "", "tags": ["verb"] },
+    { "id": "T03-002", "en": "to me (I want …)", "rom": "mujhko", "dev": "मुझको", "phon": "", "note": "mujhe means the same", "gender": "", "tags": ["ko-form"] },
+    { "id": "T03-003", "en": "to you (intimate)", "rom": "tujhko", "dev": "तुझको", "phon": "", "note": "closest friends and little kids only", "gender": "", "tags": ["ko-form"] },
+    { "id": "T03-004", "en": "to you (everyday)", "rom": "tumko", "dev": "तुमको", "phon": "", "note": "", "gender": "", "tags": ["ko-form"] },
+    { "id": "T03-005", "en": "to you (formal)", "rom": "aapko", "dev": "आपको", "phon": "", "note": "", "gender": "", "tags": ["ko-form"] },
+    { "id": "T03-006", "en": "to us", "rom": "humko", "dev": "हमको", "phon": "", "note": "", "gender": "", "tags": ["ko-form"] },
+    { "id": "T03-007", "en": "to him / her / it (near)", "rom": "isko", "dev": "इसको", "phon": "iss-ko", "note": "ye transforms into is before ko", "gender": "", "tags": ["ko-form"] },
+    { "id": "T03-008", "en": "to him / her / it (far)", "rom": "usko", "dev": "उसको", "phon": "oos-ko", "note": "vo transforms into us before ko", "gender": "", "tags": ["ko-form"] },
+    { "id": "T03-009", "en": "to them (near), or one respected person", "rom": "inko", "dev": "इनको", "phon": "", "note": "respect = plural form, even for one person", "gender": "", "tags": ["ko-form"] },
+    { "id": "T03-010", "en": "to them (far), or one respected person", "rom": "unko", "dev": "उनको", "phon": "oon-ko", "note": "", "gender": "", "tags": ["ko-form"] }
+  ],
+  "sentences": [
+    { "id": "sT03-01", "en": "I want dal makhani.", "rom": "Mujhko dal makhani chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "I = mujhko when fused with ko" },
+    { "id": "sT03-02", "en": "I want a car.", "rom": "Mujhko car chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "no 'a' — articles don't exist" },
+    { "id": "sT03-03", "en": "We want mango and one lakh.", "rom": "Humko mango aur ek lakh chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "" },
+    { "id": "sT03-04", "en": "Jacob doesn't want a ball.", "rom": "Jacob ko ball nahi chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "names just add ko; nahi before the verb" },
+    { "id": "sT03-05", "en": "She (partner, sitting next to you) wants a cake.", "rom": "Isko cake chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "near + informal = isko" },
+    { "id": "sT03-06", "en": "Mom wants a cake.", "rom": "Inko cake chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "respect = plural form, even for one person" },
+    { "id": "sT03-07", "en": "He (brother, far away) doesn't want a job.", "rom": "Usko job nahi chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "far + informal = usko" },
+    { "id": "sT03-08", "en": "Uncle doesn't want a job.", "rom": "Unko job nahi chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "far + respect = unko" },
+    { "id": "sT03-09", "en": "They want samosa and pani puri. (near)", "rom": "Inko samosa aur pani puri chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "" },
+    { "id": "sT03-10", "en": "They want samosa and pani puri. (far)", "rom": "Unko samosa aur pani puri chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "" },
+    { "id": "sT03-11", "en": "They want this, they don't want that.", "rom": "Inko ye chahiye, vo nahi chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "" },
+    { "id": "sT03-12", "en": "They want 1,500 dollars.", "rom": "Inko ek hazaar paanch sau dollars chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "big numbers read left to right" },
+    { "id": "sT03-13", "en": "He doesn't want work.", "rom": "Usko kaam nahi chahiye.", "dev": "", "phon": "", "confirmed": false, "note": "kaam = work is not confirmed in class yet — try it, then check with your teacher" }
+  ],
+  "watch_out": [
+    "ye and vo never take ko — they become is / us first.",
+    "nahi sits just before chahiye: Jacob ko ball nahi chahiye.",
+    "is / us / in / un are pronounced \"iss\", \"oos\", \"in\", \"oon\"."
+  ],
+  "ask_next_time": [
+    "The word under \"Michael ko\" on the 8/4 page — couldn't be read (aam? gaana?). Whatever it is, it's the object Michael wants.",
+    "Two older worksheet lines used Inke / Unke before chahiye — they likely should be Inko / Unko. Double-check.",
+    "\"She wants chocolates, not bananas\" is on the worksheet without an answer — try it, then bring back the real one."
+  ]
+}

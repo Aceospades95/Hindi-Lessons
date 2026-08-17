@@ -1,0 +1,13 @@
+node_modules
+var
+data-vol
+.git
+.github
+*.db
+*.db-wal
+*.db-shm
+.env
+README.md
+unraid-template.xml
+materials
+course-site

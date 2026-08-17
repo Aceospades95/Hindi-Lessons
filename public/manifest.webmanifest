@@ -1,0 +1,17 @@
+{
+  "name": "Delhi Hindi",
+  "short_name": "Hindi",
+  "description": "A six-month Delhi Hindi course: reader, practice and momentum tracker.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf9f7",
+  "theme_color": "#b45309",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='104' fill='%23b45309'/%3E%3Ctext x='256' y='372' font-size='320' text-anchor='middle' fill='white' font-family='serif'%3E%E0%A4%B9%3C/text%3E%3C/svg%3E",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

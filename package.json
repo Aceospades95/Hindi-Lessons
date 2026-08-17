@@ -1,0 +1,22 @@
+{
+  "name": "delhi-hindi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted Delhi Hindi course: reader, forgiving quiz engine, spaced repetition and a momentum tracker.",
+  "license": "MIT",
+  "main": "server/index.js",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node server/grade.test.js && node server/lessons.test.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.5.0",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.5",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.1",
+    "express-rate-limit": "^7.4.1"
+  }
+}

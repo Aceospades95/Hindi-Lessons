@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#b45309">
+<title>Delhi Hindi</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23b45309'/%3E%3Ctext x='32' y='47' font-size='40' text-anchor='middle' fill='white' font-family='serif'%3E%E0%A4%B9%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+
+<!-- ---------------- auth gate ---------------- -->
+<div id="gate">
+  <div class="gatebox">
+    <div class="dv">दिल्ली की हिन्दी</div>
+    <h1 id="gateTitle">Welcome back</h1>
+    <div class="sub" id="gateSub">Sign in to pick up where you left off.</div>
+    <div id="gateErr" class="gateerr" style="display:none"></div>
+    <form id="gateForm" autocomplete="on">
+      <div class="field" id="fName" style="display:none">
+        <label for="gName">Your name</label>
+        <input id="gName" type="text" autocomplete="name" placeholder="Jacob">
+      </div>
+      <div class="field">
+        <label for="gEmail">Email</label>
+        <input id="gEmail" type="email" autocomplete="username" required placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="gPass">Password</label>
+        <input id="gPass" type="password" autocomplete="current-password" required placeholder="At least 8 characters">
+      </div>
+      <div class="field" id="fInvite" style="display:none">
+        <label for="gInvite">Invite code</label>
+        <input id="gInvite" type="text" placeholder="from the admin">
+      </div>
+      <button class="btn" id="gateBtn" type="submit">Sign in</button>
+    </form>
+    <div class="gateswap" id="gateSwap"></div>
+    <div class="gatenote" id="gateNote"></div>
+  </div>
+</div>
+
+<!-- ---------------- app shell ---------------- -->
+<button id="menubtn" aria-label="Menu">☰</button>
+<div id="scrim"></div>
+<div id="app">
+  <aside id="sidebar">
+    <div class="brand" id="brand">
+      <div class="dv">ह</div>
+      <div>
+        <h1>Delhi Hindi</h1>
+        <div class="sub" id="whoami">—</div>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab" data-view="dash">Progress</button>
+      <button class="tab" data-view="lessons">My Lessons</button>
+      <button class="tab" data-view="read">Read</button>
+      <button class="tab" data-view="quiz">Practice</button>
+    </div>
+    <div class="searchwrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+      <input id="q" type="search" placeholder="Search everything…" autocomplete="off">
+      <span class="kbd">/</span>
+    </div>
+    <div id="results"></div>
+    <nav id="nav"></nav>
+    <div class="toolbar">
+      <button class="tbtn" id="themebtn">☾ Dark</button>
+      <button class="tbtn" id="keybtn">Hide answers</button>
+      <button class="tbtn" id="devbtn">क A+</button>
+      <button class="tbtn" id="outbtn">Sign out</button>
+    </div>
+  </aside>
+  <main id="main"><div id="content"></div></main>
+</div>
+
+<div class="charttip" id="tip"></div>
+<div class="toast" id="toast"></div>
+
+<script src="/translit.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
