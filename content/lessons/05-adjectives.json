@@ -1,0 +1,98 @@
+{
+  "code": "T05",
+  "seq": 5,
+  "date": "2026-08-23",
+  "title": "Aug 23 · Adjectives that agree: -a / -i / -e",
+  "topic": "Adjective agreement — the mera/meri/mere endings, now on adjectives — plus fruit & sabzi vocab",
+  "pattern": {
+    "name": "Adjectives agree with their noun",
+    "template": "[ adjective + -a / -i / -e ]  +  [ noun ]   —   the noun decides the ending",
+    "notes": [
+      "Same ending system as mera / meri / mere from Aug 16: -a masculine, -i feminine, -e plural or respect.",
+      "The adjective sits in front of its noun: bada bhai, khatti pani puri — or before hai: ghar bahut badaa hai.",
+      "bahut goes right before the adjective it boosts: bahut achha dancer.",
+      "Respect makes it plural, even for one person: mere bhaiya bahut patle hai.",
+      "Two words for old: bordha for living beings, purana for things."
+    ]
+  },
+  "grids": [
+    {
+      "title": "The adjective table",
+      "headers": ["English", "Masculine (-a)", "Feminine (-i)", "Plural / respect (-e)"],
+      "rows": [
+        ["big / older", "badaa", "badi", "bade"],
+        ["small / younger", "chhota", "chhoti", "chhote"],
+        ["tall / long", "lambaa", "lambi", "lambe"],
+        ["good", "achchha", "achchhi", "achchhe"],
+        ["bad", "bura", "buri", "bure"],
+        ["new", "nayaa", "nai", "nae"],
+        ["old (living)", "bordha", "bordhi", "bordhe"],
+        ["old (things)", "purana", "purani", "purane"],
+        ["fat", "mota", "moti", "mote"],
+        ["slim / thin / skinny", "patla", "patli", "patle"],
+        ["sweet", "meetha", "meethi", "meethe"],
+        ["sour", "khatta", "khatti", "khatte"],
+        ["bitter", "kadwa", "kadwi", "kadwe"]
+      ]
+    }
+  ],
+  "vocab": [
+    { "id": "T05-001", "en": "big / older", "rom": "badaa", "dev": "बड़ा", "phon": "", "note": "badi (f) · bade (pl/respect); bada bhai = older brother — your sentence pages write bada", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-002", "en": "small / younger", "rom": "chhota", "dev": "छोटा", "phon": "", "note": "chhoti (f) · chhote (pl); chhota bhai = younger brother; page also: chota", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-003", "en": "tall / long", "rom": "lambaa", "dev": "लंबा", "phon": "", "note": "lambi (f) · lambe (pl)", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-004", "en": "good", "rom": "achchha", "dev": "अच्छा", "phon": "", "note": "achchhi (f) · achchhe (pl); your sentence pages mostly write achha / achhi", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-005", "en": "bad", "rom": "bura", "dev": "बुरा", "phon": "", "note": "buri (f) · bure (pl)", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-006", "en": "new", "rom": "nayaa", "dev": "नया", "phon": "", "note": "nai (f) · nae (pl)", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-007", "en": "old (living)", "rom": "bordha", "dev": "बूढ़ा", "phon": "", "note": "bordhi (f) · bordhe (pl/respect); for people and animals — things are purana; often spelled boodha", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-008", "en": "old (things)", "rom": "purana", "dev": "पुराना", "phon": "", "note": "purani (f) · purane (pl); Taj Mahal bahut purana hai", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-009", "en": "fat", "rom": "mota", "dev": "मोटा", "phon": "", "note": "moti (f) · mote (pl)", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-010", "en": "slim / thin / skinny", "rom": "patla", "dev": "पतला", "phon": "", "note": "patli (f) · patle (pl)", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-011", "en": "sweet", "rom": "meetha", "dev": "मीठा", "phon": "", "note": "meethi (f) · meethe (pl)", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-012", "en": "sour", "rom": "khatta", "dev": "खट्टा", "phon": "", "note": "khatti (f) · khatte (pl); khatti pani puri", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-013", "en": "bitter", "rom": "kadwa", "dev": "कड़वा", "phon": "", "note": "kadwi (f) · kadwe (pl)", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-014", "en": "beautiful", "rom": "sundar", "dev": "सुंदर", "phon": "", "note": "from: Mera nayaa ghar bahut badaa aur sundar hai; doesn't end in -a — see Ask next time", "gender": "", "tags": ["adjective"] },
+    { "id": "T05-015", "en": "brother", "rom": "bhai", "dev": "भाई", "phon": "", "note": "bada bhai = older, chhota bhai = younger", "gender": "m", "tags": ["noun", "family"] },
+    { "id": "T05-016", "en": "sister", "rom": "behen", "dev": "बहन", "phon": "", "note": "chhoti behen = younger sister", "gender": "f", "tags": ["noun", "family"] },
+    { "id": "T05-017", "en": "older brother (respectful)", "rom": "bhaiya", "dev": "भैया", "phon": "", "note": "takes plural out of respect: mere bhaiya bahut patle hai", "gender": "m", "tags": ["noun", "family"] },
+    { "id": "T05-018", "en": "house / home", "rom": "ghar", "dev": "घर", "phon": "", "note": "the class corrected 'house' to ghar", "gender": "m", "tags": ["noun"] },
+    { "id": "T05-019", "en": "watermelon", "rom": "tarbuz", "dev": "तरबूज़", "phon": "", "note": "", "gender": "m", "tags": ["noun", "fruit"] },
+    { "id": "T05-020", "en": "pomegranate", "rom": "anaar", "dev": "अनार", "phon": "", "note": "", "gender": "m", "tags": ["noun", "fruit"] },
+    { "id": "T05-021", "en": "pear", "rom": "nashpati", "dev": "नाशपाती", "phon": "", "note": "", "gender": "f", "tags": ["noun", "fruit"] },
+    { "id": "T05-022", "en": "guava", "rom": "amrood", "dev": "अमरूद", "phon": "", "note": "", "gender": "m", "tags": ["noun", "fruit"] },
+    { "id": "T05-023", "en": "papaya", "rom": "papita", "dev": "पपीता", "phon": "", "note": "", "gender": "m", "tags": ["noun", "fruit"] },
+    { "id": "T05-024", "en": "potato", "rom": "aaloo", "dev": "आलू", "phon": "", "note": "", "gender": "m", "tags": ["noun", "vegetable"] },
+    { "id": "T05-025", "en": "tomato", "rom": "tamaatar", "dev": "टमाटर", "phon": "", "note": "", "gender": "m", "tags": ["noun", "vegetable"] },
+    { "id": "T05-026", "en": "pea", "rom": "matar", "dev": "मटर", "phon": "", "note": "", "gender": "m", "tags": ["noun", "vegetable"] },
+    { "id": "T05-027", "en": "chilli", "rom": "mirchi", "dev": "मिर्ची", "phon": "", "note": "", "gender": "f", "tags": ["noun", "vegetable"] },
+    { "id": "T05-028", "en": "cauliflower", "rom": "gobhi", "dev": "गोभी", "phon": "", "note": "", "gender": "f", "tags": ["noun", "vegetable"] },
+    { "id": "T05-029", "en": "cabbage", "rom": "patta gobhi", "dev": "पत्ता गोभी", "phon": "", "note": "patta = leaf — leaf-gobhi", "gender": "f", "tags": ["noun", "vegetable"] },
+    { "id": "T05-030", "en": "ginger", "rom": "adrak", "dev": "अदरक", "phon": "", "note": "gender varies by speaker — on the Ask list", "gender": "", "tags": ["noun", "vegetable"] },
+    { "id": "T05-031", "en": "onion", "rom": "pyaaz", "dev": "प्याज़", "phon": "", "note": "gender varies by speaker — on the Ask list", "gender": "", "tags": ["noun", "vegetable"] },
+    { "id": "T05-032", "en": "garlic", "rom": "lasan", "dev": "लहसुन", "phon": "", "note": "standard spelling: lahsun", "gender": "m", "tags": ["noun", "vegetable"] },
+    { "id": "T05-033", "en": "carrot", "rom": "gaajar", "dev": "गाजर", "phon": "", "note": "", "gender": "f", "tags": ["noun", "vegetable"] },
+    { "id": "T05-034", "en": "vegetable(s)", "rom": "sabzi", "dev": "सब्ज़ी", "phon": "", "note": "the vocab page header: Vegetables (Sabzi)", "gender": "f", "tags": ["noun", "food"] }
+  ],
+  "sentences": [
+    { "id": "sT05-01", "en": "My older brother is a very good dancer.", "rom": "Mera bada bhai bahut achha dancer hai.", "dev": "", "phon": "", "confirmed": true, "note": "the dancer is a he → achha; bada bhai = older brother" },
+    { "id": "sT05-02", "en": "Your younger sister is not a good dancer.", "rom": "Tumhari chhoti behen achhi dancer nahi hai.", "dev": "", "phon": "", "confirmed": true, "note": "everything goes -i to match behen; nahi sits just before hai" },
+    { "id": "sT05-03", "en": "Their parents are not doctors.", "rom": "Unke parents doctors nahi hai.", "dev": "", "phon": "", "confirmed": true, "note": "unke from Aug 16; your page reads hai — plural 'are' is usually hai(n), on the Ask list" },
+    { "id": "sT05-04", "en": "My new house is very big and beautiful.", "rom": "Mera nayaa ghar bahut badaa aur sundar hai.", "dev": "", "phon": "", "confirmed": true, "note": "'house' corrected to ghar in class" },
+    { "id": "sT05-05", "en": "My grandma is very old.", "rom": "Meri grandma bahut bordhe hai.", "dev": "", "phon": "", "confirmed": false, "note": "your page looks like bordhe, but the day's system predicts bordhi for feminine grandma — ending unconfirmed, ask your teacher (meri vs mera is also hard to read on the page)" },
+    { "id": "sT05-06", "en": "I don't want sour Pani Puri.", "rom": "Mujhe khatti Pani Puri nahi chahiye.", "dev": "", "phon": "", "confirmed": true, "note": "khatta → khatti to match pani puri (feminine); mujhe = mujhko from Aug 4; nahi before chahiye" },
+    { "id": "sT05-07", "en": "Taj Mahal is very old.", "rom": "Taj Mahal bahut purana hai.", "dev": "", "phon": "", "confirmed": true, "note": "purana, not bordha — the Taj is a thing" },
+    { "id": "sT05-08", "en": "My younger brother is very fat, and my older brother is very skinny.", "rom": "Mera chhota bhai bahut mota hai, mere bhaiya bahut patle hai.", "dev": "", "phon": "", "confirmed": true, "note": "respect makes it plural: mere bhaiya … patle — the -e endings from Aug 16 finally in action" },
+    { "id": "sT05-09", "en": "Your food is very bitter.", "rom": "Aapka khana bahut kadwa hai.", "dev": "", "phon": "", "confirmed": true, "note": "aapka = formal your; khana is masculine → kadwa" }
+  ],
+  "watch_out": [
+    "The -e column is respect too: mere bhaiya bahut patle hai — one person, plural everything.",
+    "Two olds: bordha for living beings, purana for things. The Taj Mahal is purana; grandma is not.",
+    "The adjective agrees with the thing even in a chahiye sentence: Mujhe khatti Pani Puri nahi chahiye — khatti, because pani puri is feminine.",
+    "nahi still sits just before the verb part: achhi dancer nahi hai."
+  ],
+  "ask_next_time": [
+    "Grandma: the page looks like bordhe, but grandma is feminine — bordhi hai(n) or bordhe hai(n)? Which ending do respected women get?",
+    "Sentence 3 reads nahi hai — should plural parents be nahi hai(n)?",
+    "Genders of the new fruits & sabzi — especially adrak and pyaaz — needed to pick khatta vs khatti at the market.",
+    "Do adjectives that don't end in -a (like sundar) ever change?"
+  ]
+}
