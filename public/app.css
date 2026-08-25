@@ -347,3 +347,8 @@ html[data-theme="dark"] .diagrow svg{filter:invert(.9) hue-rotate(180deg)}
 .asklist li:last-child{border-bottom:none}
 .flagbox{border-color:var(--accent);background:var(--accent-bg)}
 .lback{font-family:var(--sans);font-size:13px;margin-bottom:10px}
+
+/* Devanagari toggle off: script text disappears from drills and lesson tables
+   (the Read tab's course chapters are untouched — that's reference material) */
+body.nodev .vref .dv,
+body.nodev .ltable td.dv{display:none}

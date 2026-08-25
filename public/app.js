@@ -398,11 +398,32 @@
     { key: "script", label: "Write it", blurb: "English → Devanagari" },
     { key: "sentence", label: "Translate", blurb: "Hindi sentence → English" },
     { key: "sentenceHi", label: "Into Hindi", blurb: "English sentence → Hindi" },
+    { key: "combo", label: "Mix it up", blurb: "fresh sentences built from your lessons" },
   ];
   var qcfg = { size: 15, modes: ["recognise", "produce", "script", "sentence"], onlyDue: false, scope: "all" };
 
+  // the tracked next-question Enter listener — see showVerdict
+  var qEnter = null;
+  function clearQEnter() {
+    if (qEnter) { document.removeEventListener("keydown", qEnter); qEnter = null; }
+  }
+
+  function devOn() {
+    return !!(state.user && state.user.settings && state.user.settings.devanagari === "on");
+  }
+  function applyDevPref() {
+    document.body.classList.toggle("nodev", !devOn());
+    if (!devOn()) {
+      var i = qcfg.modes.indexOf("script");
+      if (i >= 0) qcfg.modes.splice(i, 1);
+      if (!qcfg.modes.length) qcfg.modes = ["produce"];
+    }
+  }
+
   function renderQuizSetup() {
+    clearQEnter();
     var el = $("#content"); el.className = "";
+    var dv = devOn();
     var due = state.stats ? state.stats.srs.due : 0;
     var h = '<div class="quizwrap qsetup"><h1 class="chapter"><span class="chnum">Practice</span>What shall we drill?</h1>';
     h += "<p>" + (due ? "<b>" + due + "</b> item" + (due === 1 ? " is" : "s are") + " due for review. Those come first automatically."
@@ -415,10 +436,15 @@
     }
     h += '<div class="card"><h2>Question types</h2><div class="sub">Typed answers. Near-misses are accepted with a note, never marked wrong for a stray space.</div><div class="opts">';
     QMODES.forEach(function (m) {
+      if (m.key === "script" && !dv) return;
+      var blurb = m.key === "recognise" && !dv ? "Hindi → meaning" : m.blurb;
       h += '<button class="chip' + (qcfg.modes.indexOf(m.key) >= 0 ? " on" : "") + '" data-mode="' + m.key + '">' +
-           esc(m.label) + ' <span style="opacity:.65;font-size:12px">' + esc(m.blurb) + "</span></button>";
+           esc(m.label) + ' <span style="opacity:.65;font-size:12px">' + esc(blurb) + "</span></button>";
     });
     h += "</div></div>";
+    h += '<div class="card"><h2>Devanagari script</h2><div class="sub">Off = no Write-it drills, and every prompt comes in roman letters. Per-account — flip it on when you start learning the script.</div><div class="opts">' +
+         '<button class="chip' + (dv ? " on" : "") + '" data-dev="on">On</button>' +
+         '<button class="chip' + (!dv ? " on" : "") + '" data-dev="off">Off</button></div></div>';
     h += '<div class="card"><h2>How many?</h2><div class="opts">' +
          [10, 15, 25, 40].map(function (n) {
            return '<button class="chip' + (qcfg.size === n ? " on" : "") + '" data-size="' + n + '">' + n + "</button>"; }).join("") +
@@ -433,6 +459,17 @@
     $$("[data-size]").forEach(function (b) { b.onclick = function () { qcfg.size = +b.dataset.size; renderQuizSetup(); }; });
     var dueBtn = $("[data-due]"); if (dueBtn) dueBtn.onclick = function () { qcfg.onlyDue = !qcfg.onlyDue; renderQuizSetup(); };
     $$("[data-scope]").forEach(function (b) { b.onclick = function () { qcfg.scope = b.dataset.scope; renderQuizSetup(); }; });
+    $$("[data-dev]").forEach(function (b) { b.onclick = function () {
+      var want = b.dataset.dev === "on";
+      if (want === devOn()) return;
+      var s = Object.assign({}, (state.user && state.user.settings) || {});
+      s.devanagari = want ? "on" : "off";
+      post("/api/auth/settings", { settings: s }).then(function (r) {
+        state.user = r.user; applyDevPref();
+        toast(want ? "Devanagari on — script drills are available again" : "Devanagari off — roman letters everywhere");
+        renderQuizSetup();
+      }).catch(function (e) { toast(e.message); });
+    }; });
     $("#startQuiz").onclick = startQuiz;
   }
 
@@ -451,8 +488,10 @@
   }
 
   function renderQuestion() {
+    clearQEnter();
     var q = state.quiz, it = q.items[q.i];
     if (!it) return renderQuizDone();
+    q.phase = "question";
     var el = $("#content"); el.className = "";
     var isDevAnswer = it.answerMode === "dev";
     var promptIsDev = /[ऀ-ॿ]/.test(it.prompt);
@@ -505,6 +544,7 @@
 
   function showVerdict(r, given) {
     var q = state.quiz, it = q.items[q.i];
+    q.phase = "verdict";
     q.results.push(r.verdict);
     var icon = r.verdict === "perfect" ? "✓" : r.verdict === "close" ? "≈" : "✗";
     var word = r.verdict === "perfect" ? "Spot on" : r.verdict === "close" ? "Close enough — counted correct" : "Not quite";
@@ -538,13 +578,23 @@
     };
     var nxt = $("#qnext");
     nxt.focus();
-    nxt.onclick = function () { q.i++; renderQuestion(); };
-    document.addEventListener("keydown", function once(e) {
-      if (e.key === "Enter") { e.preventDefault(); document.removeEventListener("keydown", once); q.i++; renderQuestion(); }
-    });
+    // One advance per verdict, whichever way it's triggered. The Enter listener
+    // is tracked module-wide and removed on every path — a leaked copy is what
+    // used to skip questions and paste old verdicts onto fresh ones.
+    var advanced = false;
+    function advance() {
+      if (advanced) return; advanced = true;
+      clearQEnter();
+      if (state.quiz !== q || state.view !== "quiz") return;
+      q.i++; renderQuestion();
+    }
+    qEnter = function (e) { if (e.key === "Enter") { e.preventDefault(); advance(); } };
+    document.addEventListener("keydown", qEnter);
+    nxt.onclick = advance;
   }
 
   function renderQuizDone() {
+    clearQEnter();
     var q = state.quiz;
     var ok = q.results.filter(function (v) { return v !== "wrong"; }).length;
     var pct = Math.round((ok / q.results.length) * 100);
@@ -572,7 +622,8 @@
   }
 
   function drillLesson(codes) {
-    var modes = ["produce", "sentence", "sentenceHi", "recognise", "script"];
+    var modes = ["produce", "sentence", "sentenceHi", "recognise"];
+    if (devOn()) modes.push("script");
     post("/api/quiz/session", { size: qcfg.size, modes: modes, decks: codes, tzOffset: TZ })
       .then(function (r) {
         if (!r.items.length) { toast("Nothing to drill here yet."); return; }
@@ -694,6 +745,12 @@
     } else if (parts[0] === "quiz") {
       setView("quiz");
       if (!state.quiz) renderQuizSetup();
+      else {
+        // Coming back mid-quiz: a shown verdict was already recorded, so resume
+        // on the next question rather than re-asking (and re-grading) this one.
+        if (state.quiz.phase === "verdict") state.quiz.i++;
+        renderQuestion();
+      }
     } else {
       setView("dash");
       api("/api/stats?tz=" + TZ).then(function (s) { state.stats = s; renderDash(); });
@@ -706,6 +763,7 @@
   function boot() {
     $("#app").classList.add("show");
     $("#whoami").textContent = state.user.name;
+    applyDevPref();
     Promise.all([
       api("/api/content"),
       api("/api/progress"),

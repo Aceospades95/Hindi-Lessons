@@ -60,6 +60,8 @@ const decks = lessons.map((L) => ({
     phon: v.phon || "",
     eng: v.en,
     note: v.note || "",
+    gender: v.gender || "",     // combos.js pairs adjectives by these two
+    tags: v.tags || [],
   })),
 }));
 

@@ -76,15 +76,19 @@ function seenSet(userId) {
   return new Set(rows.map((r) => r.item_id + "|" + r.mode));
 }
 
-/** Cards whose box is high enough to call "known". */
-function stats(userId, today) {
+/** Cards whose box is high enough to call "known".
+ *  excludeModes: hide modes the learner has switched off (e.g. script) so the
+ *  dashboard's "due" count matches what Practice will actually serve. */
+function stats(userId, today, { excludeModes = [] } = {}) {
+  const skip = excludeModes.length
+    ? ` AND mode NOT IN (${excludeModes.map(() => "?").join(",")})` : "";
   const r = db.prepare(`
     SELECT COUNT(*) total,
            SUM(CASE WHEN box >= 5 THEN 1 ELSE 0 END) strong,
            SUM(CASE WHEN box BETWEEN 2 AND 4 THEN 1 ELSE 0 END) learning,
            SUM(CASE WHEN box <= 1 THEN 1 ELSE 0 END) shaky,
            SUM(CASE WHEN due <= ? THEN 1 ELSE 0 END) due
-    FROM srs WHERE user_id = ?`).get(today, userId);
+    FROM srs WHERE user_id = ?${skip}`).get(today, userId, ...excludeModes);
   return {
     total: r.total || 0, strong: r.strong || 0, learning: r.learning || 0,
     shaky: r.shaky || 0, due: r.due || 0,

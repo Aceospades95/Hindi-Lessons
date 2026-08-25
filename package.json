@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node server/index.js",
     "dev": "node --watch server/index.js",
-    "test": "node server/grade.test.js && node server/lessons.test.js"
+    "test": "node server/grade.test.js && node server/lessons.test.js && node server/combos.test.js"
   },
   "dependencies": {
     "better-sqlite3": "^11.5.0",

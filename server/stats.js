@@ -79,7 +79,10 @@ function dashboard(user, tzOffset = 0) {
   const done = db.prepare("SELECT chapter_id FROM progress WHERE user_id=? AND completed_at IS NOT NULL").all(user.id);
   const chaptersDone = new Set(done.map((r) => r.chapter_id));
 
-  const s = srs.stats(user.id, today);
+  let settings = {};
+  try { settings = JSON.parse(user.settings || "{}"); } catch (e) { /* ignore */ }
+  const s = srs.stats(user.id, today,
+    { excludeModes: settings.devanagari === "on" ? [] : ["script"] });
   const st = streaks(days, goal, today);
 
   // last 30 days series for the charts

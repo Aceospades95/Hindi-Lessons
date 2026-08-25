@@ -6,6 +6,7 @@ const db = require("./db");
 const srs = require("./srs");
 const { grade } = require("./grade");
 const ai = require("./ai");
+const combos = require("./combos");
 
 const DATA = path.join(__dirname, "..", "data");
 const myLessons = require("./lessons");
@@ -69,17 +70,42 @@ const MODES = {
     answer: "roman", from: "eng",
     build: (s) => ({ prompt: s.eng, sub: "", expected: s.rom, answerMode: "roman" }),
   },
+  // Generated recombinations of taught material — handled by combos.js, never
+  // built from a stored card, so build() stays null for real items.
+  combo: {
+    label: "Mix it up", hint: "Type the Hindi in roman letters",
+    answer: "roman", from: "eng",
+    build: () => null,
+  },
 };
 
-function itemPayload(itemId, mode) {
+/** Per-user settings live as a JSON blob on the users row. */
+function userSettings(user) {
+  try { return JSON.parse((user && user.settings) || "{}"); } catch (e) { return {}; }
+}
+/** Devanagari is opt-in: script drills and Devanagari prompts arrive only
+ *  once the learner flips the toggle on. */
+const devanagariOn = (user) => userSettings(user).devanagari === "on";
+
+function itemPayload(itemId, mode, opts = {}) {
+  if (combos.isGen(itemId)) return mode === "combo" ? combos.payload(itemId, cardById) : null;
   const spec = MODES[mode];
-  if (!spec) return null;
+  if (!spec || mode === "combo") return null;
+  const noDev = !!opts.noDev;
+  if (noDev && mode === "script") return null;
   const isSent = itemId.startsWith("s");
   const src = isSent ? sentById.get(itemId) : cardById.get(itemId);
   if (!src) return null;
+  if (noDev && !isSent && isLetter(src)) return null;   // letter cards are pure script
   if (isSent !== (mode === "sentence" || mode === "sentenceHi")) return null;
   const built = spec.build(src);
   if (!built || !built.expected || !built.prompt) return null;
+  if (noDev) {
+    // Devanagari toggle off: prompt in roman instead of script
+    if (mode === "recognise") { built.prompt = bare(src.rom); }
+    if (mode === "sentence") { built.prompt = src.rom; built.sub = ""; }
+    if (!built.prompt) return null;
+  }
   return {
     itemId, mode, label: spec.label, hint: built.hint || spec.hint,
     prompt: built.prompt, sub: built.sub, answerMode: built.answerMode,
@@ -115,20 +141,38 @@ function inDecks(itemId, filter) {
 
 function buildSession(user, { size = 15, modes, decks: deckFilter, week, onlyDue = false, seed } = {}) {
   const today = new Date().toISOString().slice(0, 10);
+  const devOn = devanagariOn(user);
+  const rndSeed = seed || Date.now() % 100000;
   const wantModes = (modes && modes.length ? modes : ["recognise", "produce", "script", "sentence"])
-    .filter((m) => MODES[m]);
+    .filter((m) => MODES[m])
+    .filter((m) => devOn || m !== "script");   // script drills only when the toggle is on
+  const withCombos = wantModes.includes("combo");
+  const qModes = wantModes.filter((m) => m !== "combo");
+  const pOpts = { noDev: !devOn };
   const filtered = deckFilter && deckFilter.length ? deckFilter : null;
   const out = [];
   const used = new Set();
 
-  // 1. anything due (scoped to the chosen decks, when a scope is set)
+  // 1. due reviews first — shuffled within the due window, so a backlog stops
+  // serving the identical items in the identical order every single session.
+  const dueRows = [];
   for (const d of srs.dueItems(user.id, today, size * 3)) {
-    if (out.length >= size) break;
-    if (!wantModes.includes(d.mode)) continue;
+    if (!qModes.includes(d.mode)) continue;
     if (filtered && !inDecks(d.item_id, filtered)) continue;
-    const p = itemPayload(d.item_id, d.mode);
-    if (p && !used.has(d.item_id + d.mode)) { out.push({ ...p, isReview: true }); used.add(d.item_id + d.mode); }
+    dueRows.push(d);
   }
+  shuffle(dueRows, rndSeed + 7);
+  const takeDue = (limit) => {
+    for (const d of dueRows) {
+      if (out.length >= limit) break;
+      const k = d.item_id + d.mode;
+      if (used.has(k)) continue;
+      const p = itemPayload(d.item_id, d.mode, pOpts);
+      if (p) { out.push({ ...p, isReview: true }); used.add(k); }
+    }
+  };
+  // unless review-only was asked for, keep room in every session for fresh material
+  takeDue(onlyDue ? size : Math.ceil(size * 0.7));
   if (onlyDue) return out;
 
   // 2. new material, weighted to the learner's current week
@@ -147,30 +191,54 @@ function buildSession(user, { size = 15, modes, decks: deckFilter, week, onlyDue
     } else if (s.week > maxWeek) continue;
     pool.push({ id: s.id, kind: "sent" });
   }
-  shuffle(pool, seed || Date.now() % 100000);
+  shuffle(pool, rndSeed);
 
-  const cardModes = wantModes.filter((m) => m !== "sentence" && m !== "sentenceHi");
-  const sentModes = wantModes.filter((m) => m === "sentence" || m === "sentenceHi");
+  const cardModes = qModes.filter((m) => m !== "sentence" && m !== "sentenceHi");
+  const sentModes = qModes.filter((m) => m === "sentence" || m === "sentenceHi");
+  // combos claim a slice of the session up front (all of it if they're the only mode)
+  const comboTarget = !withCombos ? 0
+    : (cardModes.length || sentModes.length)
+      ? Math.min(size - out.length, Math.max(3, Math.ceil(size / 3)))
+      : size - out.length;
+  const freshLimit = size - comboTarget;
   let mi = 0;
   for (const p of pool) {
-    if (out.length >= size) break;
+    if (out.length >= freshLimit) break;
     const list = p.kind === "sent" ? sentModes : cardModes;
     if (!list.length) continue;
     const mode = list[mi++ % list.length];
     const k = p.id + mode;
     if (used.has(k) || seen.has(p.id + "|" + mode)) continue;
-    const payload = itemPayload(p.id, mode);
+    const payload = itemPayload(p.id, mode, pOpts);
     if (!payload) continue;
     out.push({ ...payload, isReview: false });
     used.add(k);
   }
-  return out;
+
+  // 3. combos fill their slice — plus whatever fresh material couldn't cover
+  if (withCombos && out.length < size) {
+    for (const id of combos.generate(cardById, (size - out.length) * 2, rndSeed + 13)) {
+      if (out.length >= size) break;
+      const p = itemPayload(id, "combo");
+      if (p) out.push({ ...p, isReview: false });
+    }
+  }
+
+  // 4. still short (pool exhausted, no combos)? let due reviews use the space
+  if (out.length < size) takeDue(size);
+
+  // due stays first; fresh material and combos interleave behind it
+  const head = out.filter((x) => x.isReview);
+  const tail = out.filter((x) => !x.isReview);
+  shuffle(tail, rndSeed + 29);
+  return head.concat(tail);
 }
 
 /** Grade one submitted answer, record it, and advance the schedule. */
 async function submit(user, { itemId, mode, given, ms = 0, tzOffset = 0 }) {
-  const payload = itemPayload(itemId, mode);
+  const payload = itemPayload(itemId, mode, { noDev: !devanagariOn(user) });
   if (!payload) return { error: "unknown item" };
+  const isGen = combos.isGen(itemId);
 
   let result = grade(given, payload._expected, { mode: payload.answerMode });
   let judgedBy = "rules";
@@ -197,7 +265,10 @@ async function submit(user, { itemId, mode, given, ms = 0, tzOffset = 0 }) {
     .run(user.id, itemId, mode, payload.prompt, payload._expected, String(given || ""),
          result.verdict, result.score, ms, judgedBy, result.note || null, new Date().toISOString());
 
-  const state = srs.review(user.id, itemId, mode, result.verdict, day);
+  // Generated combos are graded and counted, but never scheduled for review.
+  const state = isGen
+    ? { due: "not scheduled — combos are fresh every time", box: 0 }
+    : srs.review(user.id, itemId, mode, result.verdict, day);
   bumpDay(user.id, day, { reviewed: 1, correct: result.verdict === "wrong" ? 0 : 1 });
 
   return {
@@ -215,7 +286,7 @@ function override(user, attemptId) {
   const day = a.created_at.slice(0, 10);
   if (a.verdict === "wrong") {
     db.prepare("UPDATE study_days SET correct = correct + 1 WHERE user_id=? AND day=?").run(user.id, day);
-    srs.review(user.id, a.item_id, a.mode, "close", new Date().toISOString().slice(0, 10));
+    if (!combos.isGen(a.item_id)) srs.review(user.id, a.item_id, a.mode, "close", new Date().toISOString().slice(0, 10));
   }
   return { ok: true };
 }
