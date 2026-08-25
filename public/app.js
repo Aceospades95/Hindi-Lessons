@@ -498,7 +498,8 @@
 
     var h = '<div class="quizwrap"><div class="qbar"><span>' + (q.i + 1) + " / " + q.items.length + "</span>" +
             '<div class="qprog"><i style="width:' + ((q.i / q.items.length) * 100) + '%"></i></div>' +
-            "<span>" + (it.isReview ? "review" : "new") + "</span></div>";
+            "<span>" + (it.isReview ? "review" : "new") + "</span>" +
+            '<button class="tbtn" id="qquit" title="End this round — answers so far are saved">✕ End</button></div>';
     h += '<div class="qcard"><div class="qmode">' + esc(it.label) + "</div>";
     h += '<div class="qprompt' + (promptIsDev ? " dev" : it.prompt.length > 34 ? " small" : "") + '">' + esc(it.prompt) + "</div>";
     if (it.sub) h += '<div class="qsub">' + esc(it.sub) + "</div>";
@@ -510,6 +511,10 @@
          '<button class="btn" id="qcheck">Check</button></div>';
     h += '<div id="qverdict"></div></div></div>';
     el.innerHTML = h;
+
+    $("#qquit").onclick = function () {
+      clearQEnter(); state.quiz = null; renderQuizSetup();
+    };
 
     var input = $("#qin");
     var tl = null;
@@ -635,14 +640,142 @@
       .catch(function (e) { toast(e.message); });
   }
 
-  function renderLessons() {
+  // one place to review everything: by lesson, or aggregated words / rules / sentences
+  var lessonsFilter = { q: "", tag: "" };
+
+  function lessonTabs(active) {
+    var tabs = [["", "By lesson"], ["words", "All words"], ["rules", "Rules"], ["sentences", "Sentences"]];
+    return '<div class="opts ltabs">' + tabs.map(function (t) {
+      return '<button class="chip' + ((active || "") === t[0] ? " on" : "") + '" data-lt="' + t[0] + '">' + t[1] + "</button>";
+    }).join("") + "</div>";
+  }
+  function wireLessonTabs() {
+    $$("[data-lt]").forEach(function (b) { b.onclick = function () {
+      location.hash = b.dataset.lt ? "#lessons/" + b.dataset.lt : "#lessons";
+    }; });
+  }
+
+  function renderAllWords() {
+    var el = $("#content"); el.className = "dash wide";
+    var Ls = state.lessons || [];
+    var words = [];
+    Ls.forEach(function (L) { (L.vocab || []).forEach(function (v) { words.push({ code: L.code, v: v }); }); });
+    var tagCount = {};
+    words.forEach(function (w) { (w.v.tags || []).forEach(function (t) { tagCount[t] = (tagCount[t] || 0) + 1; }); });
+    var tags = Object.keys(tagCount).sort(function (a, b) { return tagCount[b] - tagCount[a]; }).slice(0, 8);
+    if (lessonsFilter.tag && tags.indexOf(lessonsFilter.tag) === -1) lessonsFilter.tag = "";
+
+    var h = "<h1>Every word so far</h1>" +
+      '<div class="lede">' + words.length + " words from " + Ls.length + " lessons — search, or tap a tag.</div>" +
+      lessonTabs("words");
+    h += '<div class="card">';
+    h += '<input class="lfilter" id="wq" placeholder="Find a word — English, Hindi or notes…" autocomplete="off" spellcheck="false">';
+    h += '<div class="opts" style="margin-bottom:6px"><button class="chip' + (lessonsFilter.tag ? "" : " on") + '" data-tag="">all</button>' +
+      tags.map(function (t) {
+        return '<button class="chip' + (lessonsFilter.tag === t ? " on" : "") + '" data-tag="' + esc(t) + '">' +
+               esc(t) + ' <span style="opacity:.6">' + tagCount[t] + "</span></button>";
+      }).join("") + "</div>";
+    h += '<div class="tablewrap"><table class="ltable"><tr><th></th><th>English</th><th>Hindi</th><th></th><th>Notes</th></tr>' +
+         '<tbody id="wrows"></tbody></table></div></div>';
+    el.innerHTML = h;
+    wireLessonTabs();
+
+    function rows() {
+      var q = lessonsFilter.q.toLowerCase().trim(), tag = lessonsFilter.tag;
+      var out = words.filter(function (w) {
+        if (tag && (w.v.tags || []).indexOf(tag) === -1) return false;
+        if (!q) return true;
+        return (w.v.en + " " + w.v.rom + " " + (w.v.note || "")).toLowerCase().indexOf(q) !== -1;
+      }).map(function (w) {
+        return '<tr><td class="mut">' + esc(w.code) + "</td><td>" + esc(w.v.en) + '</td><td class="hi">' + esc(w.v.rom) +
+               '</td><td class="dv">' + esc(w.v.dev || "") + '</td><td class="mut">' + esc(w.v.note || "") + "</td></tr>";
+      }).join("");
+      return out || '<tr><td colspan="5" class="mut">Nothing matches that.</td></tr>';
+    }
+    var wrows = $("#wrows");
+    wrows.innerHTML = rows();
+    var wq = $("#wq");
+    wq.value = lessonsFilter.q;
+    wq.oninput = function () { lessonsFilter.q = wq.value; wrows.innerHTML = rows(); };
+    $$("[data-tag]").forEach(function (b) { b.onclick = function () {
+      lessonsFilter.tag = b.dataset.tag;
+      $$("[data-tag]").forEach(function (x) { x.classList.toggle("on", x === b); });
+      wrows.innerHTML = rows();
+    }; });
+    document.title = "Every word · Delhi Hindi";
+  }
+
+  function renderAllRules() {
+    var el = $("#content"); el.className = "dash wide";
+    var Ls = state.lessons || [];
+    var h = "<h1>The rules so far</h1>" +
+      '<div class="lede">Every pattern, grid and watch-out, in the order you learned them.</div>' +
+      lessonTabs("rules");
+    Ls.forEach(function (L) {
+      h += '<div class="card"><h2>' + esc(L.title) + "</h2>";
+      if (L.pattern) {
+        if (L.pattern.template) h += '<div class="formula">' + esc(L.pattern.template) + "</div>";
+        if (L.pattern.notes && L.pattern.notes.length) {
+          h += '<ul class="asklist">' + L.pattern.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>";
+        }
+      }
+      (L.grids || []).forEach(function (g) {
+        h += '<div class="sub" style="margin-top:12px"><b>' + esc(g.title) + '</b></div><div class="tablewrap"><table class="ltable"><tr>' +
+             g.headers.map(function (x) { return "<th>" + esc(x) + "</th>"; }).join("") + "</tr>" +
+             g.rows.map(function (row) {
+               return "<tr>" + row.map(function (cell) { return "<td>" + esc(cell) + "</td>"; }).join("") + "</tr>";
+             }).join("") + "</table></div>";
+      });
+      if (L.watch_out && L.watch_out.length) {
+        h += '<div class="sub" style="margin-top:12px"><b>Watch out</b></div><ul class="asklist">' +
+             L.watch_out.map(function (w) { return "<li>" + esc(w) + "</li>"; }).join("") + "</ul>";
+      }
+      h += '<div style="margin-top:10px"><a href="#lessons/' + esc(L.code) + '">Open ' + esc(L.code) + " →</a></div></div>";
+    });
+    if (!Ls.length) h += '<div class="card"><p>No lessons yet.</p></div>';
+    el.innerHTML = h;
+    wireLessonTabs();
+    document.title = "Rules · Delhi Hindi";
+  }
+
+  function renderAllSentences() {
+    var el = $("#content"); el.className = "dash wide";
+    var Ls = state.lessons || [];
+    var n = 0;
+    var h = "";
+    var rows = "";
+    Ls.forEach(function (L) {
+      (L.sentences || []).forEach(function (s) {
+        n++;
+        rows += '<tr><td class="mut">' + esc(L.code) + "</td><td>" + esc(s.en) +
+          (s.confirmed === false ? ' <span class="warn">unconfirmed</span>' : "") +
+          '</td><td class="hi">' + esc(s.rom) + (s.note ? '<div class="mut">' + esc(s.note) + "</div>" : "") + "</td></tr>";
+      });
+    });
+    h += "<h1>Every sentence</h1>" +
+      '<div class="lede">' + n + " sentences from class, oldest first. Unconfirmed ones stay out of graded drills.</div>" +
+      lessonTabs("sentences");
+    h += '<div class="card"><div class="tablewrap"><table class="ltable"><tr><th></th><th>English</th><th>Hindi</th></tr>' +
+         rows + "</table></div></div>";
+    if (!n) h += '<div class="card"><p>No lessons yet.</p></div>';
+    el.innerHTML = h;
+    wireLessonTabs();
+    document.title = "Every sentence · Delhi Hindi";
+  }
+
+  function renderLessons(sub) {
+    if (sub === "words") return renderAllWords();
+    if (sub === "rules") return renderAllRules();
+    if (sub === "sentences") return renderAllSentences();
     var el = $("#content"); el.className = "dash wide";
     var Ls = state.lessons || [];
     var h = "<h1>My Lessons</h1>" +
-      '<div class="lede">Everything your teacher has covered, straight from your notebook. Drill it here; use Read for the deep dives.</div>';
+      '<div class="lede">Everything your teacher has covered, straight from your notebook. Drill it here; use Read for the deep dives.</div>' +
+      lessonTabs("");
     if (!Ls.length) {
       h += '<div class="card"><p>No lessons yet. After class, photo your notebook pages into the Hindi Learning project and say "new lesson" — they land here with the next update.</p></div>';
       el.innerHTML = h;
+      wireLessonTabs();
       document.title = "My Lessons · Delhi Hindi";
       return;
     }
@@ -669,6 +802,7 @@
       h += "</ul></div>";
     }
     el.innerHTML = h;
+    wireLessonTabs();
     var da = $("#drillAll");
     if (da) da.onclick = function () { drillLesson(Ls.map(function (L) { return L.code; })); };
     document.title = "My Lessons · Delhi Hindi";
@@ -741,7 +875,9 @@
       if (parts[1]) renderRead(parts[1]); else renderHome();
     } else if (parts[0] === "lessons") {
       setView("lessons");
-      if (parts[1]) renderLesson(parts[1]); else renderLessons();
+      if (parts[1] === "words" || parts[1] === "rules" || parts[1] === "sentences") renderLessons(parts[1]);
+      else if (parts[1]) renderLesson(parts[1]);
+      else renderLessons();
     } else if (parts[0] === "quiz") {
       setView("quiz");
       if (!state.quiz) renderQuizSetup();

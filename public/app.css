@@ -352,3 +352,8 @@ html[data-theme="dark"] .diagrow svg{filter:invert(.9) hue-rotate(180deg)}
    (the Read tab's course chapters are untouched — that's reference material) */
 body.nodev .vref .dv,
 body.nodev .ltable td.dv{display:none}
+
+/* My Lessons review tabs + word search */
+.ltabs{margin-bottom:14px}
+.lfilter{width:100%;padding:11px 13px;border:1px solid var(--rule);border-radius:10px;background:transparent;color:var(--ink);font-size:15px;margin-bottom:10px;font-family:inherit}
+.lfilter:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
